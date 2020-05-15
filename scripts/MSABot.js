@@ -10,20 +10,16 @@ var userDB = process.env.UserDB;
 
 exports.initBot =  function(robot)
 {
-	console.log("export initBot");
-	console.log(robot);
    initBot(robot);
 }
 
 exports.newBot =  function(token, name, robot, team_name)
 {
-	console.log("export newBot");
    newBot(token, name, robot, team_name, true);
 }
 
 exports.resetBot =  function(robot)
 {
-	console.log("export resetBot");
    resetBot(robot);
 }
 
@@ -129,7 +125,8 @@ var initBot = function(robot)
             robot.send(admin_data, "There're "+botData.length+" bots now.");
             for(var i = 0; i < botData.length;i++)
             {
-                var token = botData[i].bot_access_token;
+				//var token = botData[i].bot_access_token;
+				token = "xoxb-998518784903-1079571063319-s6LEwFd4PmPu7tsC1wMFI2EL";
                 var auth = botData[i].access_token;
                 var name = "MSABot";
                 var team = botData[i].team_name;
@@ -146,7 +143,6 @@ var initBot = function(robot)
             robot.brain.set("reconnect_count", 0);
             robot.brain.set("bots", bots);
 			robot.brain.set('reset_check', 0);
-            console.log(bots);
             db.close();
         });
     }); 
