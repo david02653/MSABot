@@ -10,17 +10,20 @@ var userDB = process.env.UserDB;
 
 exports.initBot =  function(robot)
 {
+	console.log("export initBot");
 	console.log(robot);
    initBot(robot);
 }
 
 exports.newBot =  function(token, name, robot, team_name)
 {
+	console.log("export newBot");
    newBot(token, name, robot, team_name, true);
 }
 
 exports.resetBot =  function(robot)
 {
+	console.log("export resetBot");
    resetBot(robot);
 }
 
@@ -71,6 +74,11 @@ exports.getBot =  function(robot, bot)
 
 var checkSetting = function(robot, bot, ifReply)
 {
+	console.log("execute checkSetting");
+	console.log("robot\n" + robot);
+	console.log("bot\n" + bot);
+	console.log("ifReply\n" + ifReply);
+	
 	var eureka = bot.data.eureka;
 	var jenkins = bot.data.jenkins;
 	var zuul = bot.data.zuul;
@@ -90,6 +98,9 @@ var checkSetting = function(robot, bot, ifReply)
 	}
 	var result = "Hey, I fount that this group has no " + checkingArray + " url set up. \nPlease use \"eureka|jenkins|zuul set http://...\" to set the url for your channels.\nIf you have troubles, just use \"@MSABot help\".";
 	
+	console.log("checkingArray");
+	console.log(checkingArray);
+
 	if(checkingArray.length>0 && ifReply)
 	{
 		if(ifReply)
@@ -103,6 +114,7 @@ var checkSetting = function(robot, bot, ifReply)
 
 var initBot = function(robot)
 {
+	console.log("execute initBot");
     //get all bot data from mongodb
     var botData = [];
     robot.send(admin_data,"(Bots Connecting)Bots' initial start.");
@@ -142,6 +154,10 @@ var initBot = function(robot)
 
 var newBot = function(token, name, robot, team_name, isInstall)
 {
+	console.log("execute newBot");
+	console.log("token");
+	console.log(token);
+	
     var hubotAnalyze = require('./MessageHandler').hubotAnalyze;
     var SlackBot = require('slackbots');
     var bot = new SlackBot({
