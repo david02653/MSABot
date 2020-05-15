@@ -122,11 +122,14 @@ var initBot = function(robot)
             botData = result;
             //build and init bots
             var bots = [];
-            robot.send(admin_data, "There're "+botData.length+" bots now.");
+			robot.send(admin_data, "There're "+botData.length+" bots now.");
+			console.log(">> for loop for slack app access begin");
             for(var i = 0; i < botData.length;i++)
             {
+				console.log("botData element content :");
+				console.log(botData[i]);
 				var token = botData[i].bot_access_token;
-				//token = "xoxb-998518784903-1079571063319-6OcrNDbVYvZefZvfmiNbf9Jg";
+				console.log(">> access_token");
                 var auth = botData[i].access_token;
                 var name = "MSABot";
                 var team = botData[i].team_name;
