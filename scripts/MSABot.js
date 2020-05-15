@@ -125,8 +125,8 @@ var initBot = function(robot)
             robot.send(admin_data, "There're "+botData.length+" bots now.");
             for(var i = 0; i < botData.length;i++)
             {
-				//var token = botData[i].bot_access_token;
-				token = "xoxb-998518784903-1079571063319-6OcrNDbVYvZefZvfmiNbf9Jg";
+				var token = botData[i].bot_access_token;
+				//token = "xoxb-998518784903-1079571063319-6OcrNDbVYvZefZvfmiNbf9Jg";
                 var auth = botData[i].access_token;
                 var name = "MSABot";
                 var team = botData[i].team_name;
