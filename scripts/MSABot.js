@@ -167,6 +167,7 @@ var newBot = function(token, name, robot, team_name, isInstall)
 	});
 	console.log(bot);
     bot.on('start', function() {
+		console.log("execute on start");
         // define channel, where bot exist. You can adjust it there https://my.slack.com/services 
         var welcome = ['我又回來了。請先停看聽。', '振作起來好嗎。我剛回來。', '我的老天鵝。我回來了。', '我回來了。', '我回來了。派對收攤。', '我又來了。期待您的使用 ( ͡° ͜ʖ ͡°)', '安安', '嗖。 我剛剛著陸下來。','我剛回來。 可以幫我補血嗎？','挑戰者來了，我 來 也！','我來了。 請給我一罐啤酒。','嘿！快聽！我回來了！', '我剛回來。 似乎太 OP - 請 nerf 一下。', '一個人走很危險，跟我一起走吧！', '我上來了！我又下去了！我又上來了！怎麼樣！我可以一直上來下來！很厲害吧！', '槓上開花加一台（主機）'];
         var welcomeRandom = Math.floor(Math.random()*(welcome.length-1));
@@ -178,6 +179,7 @@ var newBot = function(token, name, robot, team_name, isInstall)
     });
     bot.on('message', function(data) 
     {
+		console.log("execute on message");
 		console.log(data);
         if(data.type=="message")
         {

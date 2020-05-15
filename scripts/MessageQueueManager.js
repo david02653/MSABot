@@ -2,6 +2,7 @@ var admin_data = { "room": process.env.adminRoom, "user_id": process.env.adminID
 		
 module.exports = function(robot) 
 {
+    console.log(robot);
 	/*########## for bot's installing detecting ##########*/
     var context = require('rabbit.js').createContext(process.env.RabbitMQUrl);
     var sub = context.socket('SUBSCRIBE');
@@ -9,6 +10,7 @@ module.exports = function(robot)
     sub.setEncoding('utf8');
     sub.on('data', function(note) {
         var botData = JSON.parse(note);
+        console.log(botData);
         robot.send(admin_data,"There're new user installing your Bot! : "+botData.team_name);
 		var bot = require('./MSABot');
 		var token = botData.bot_access_token;
