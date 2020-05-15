@@ -129,7 +129,8 @@ var initBot = function(robot)
                 var tempBot = {bot:bot, token:token, name:name, data:botData[i]};
 				checkSetting(robot, tempBot, true);
                 bots.push(tempBot);
-            }
+			}
+			robot.send(admin_data, "Inject testing message at initial bot stage");
             robot.brain.set("reconnect_count", 0);
             robot.brain.set("bots", bots);
             robot.brain.set('reset_check', 0);
