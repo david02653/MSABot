@@ -10,6 +10,9 @@ module.exports = function(robot)
     sub.setEncoding('utf8');
     sub.on('data', function(note) {
         var botData = JSON.parse(note);
+        console.log("note");
+        console.log(note);
+        console.log("botData");
         console.log(botData);
         robot.send(admin_data,"There're new user installing your Bot! : "+botData.team_name);
 		var bot = require('./MSABot');
