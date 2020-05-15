@@ -19,7 +19,7 @@ module.exports = function(robot)
 		var token = botData.bot_access_token;
 		var name = "MSABot";
 		var team = botData.team_name;
-		bot.newBot(token, name, robot, team_name);
+		bot.newBot(token, name, robot, name);
     });
 	
 	/*########## for Jenkins server ##########*/
