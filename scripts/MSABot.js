@@ -10,6 +10,7 @@ var userDB = process.env.UserDB;
 
 exports.initBot =  function(robot)
 {
+	console.log(robot);
    initBot(robot);
 }
 
