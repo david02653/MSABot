@@ -129,7 +129,6 @@ var initBot = function(robot)
 				console.log("botData element content :");
 				console.log(botData[i]);
 				var token = botData[i].bot_access_token;
-				console.log(">> access_token");
                 var auth = botData[i].access_token;
                 var name = "MSABot";
                 var team = botData[i].team_name;
@@ -180,6 +179,7 @@ var newBot = function(token, name, robot, team_name, isInstall)
     {
 		console.log("execute on message");
 		console.log(data);
+		console.log("content : " + data.text);
         if(data.type=="message")
         {
             if(data.subtype!='bot_message' && data.bot_id==null)
