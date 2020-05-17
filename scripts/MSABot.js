@@ -179,6 +179,7 @@ var newBot = function(token, name, robot, team_name, isInstall)
     bot.on('message', function(data) 
     {
 		console.log("execute on message");
+		console.log("content: " + data.text);
 		console.log(data);
         if(data.type=="message")
         {
