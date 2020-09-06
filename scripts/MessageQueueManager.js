@@ -89,6 +89,21 @@ module.exports = function(robot)
             bot.bot.postMessage(json.roomID, result.toString());  
         }
     });
+
+    /*### consume message from discord server ###*/
+    var amqp = require('amqplib/callback_api');
+    amqp.connect('amqp://36.229.104.218', (err, conn)=>{
+        conn.createChannel((err, ch)=>{
+            var exchange =  'topic_exchange';
+            ch.assertExchange(exchange, 'topic');
+            ch.assertQueue('', {exclusive: true}, (err, q)=>{
+                ch.bindQueue(q.queue, exchange, 'cat.dance');
+                ch.consume(q.queue, (msg)=>{
+		            robot.send(admin_data,msg);
+                });
+            });
+        });
+    });
 }
 
 
