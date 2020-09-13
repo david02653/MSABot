@@ -92,7 +92,7 @@ module.exports = function(robot)
 
     /*### consume message from discord server ###*/
     var amqp = require('amqplib/callback_api');
-    amqp.connect('amqp://36.229.104.218', (err, conn)=>{
+    amqp.connect('amqp://36.229.104.235', (err, conn)=>{
         conn.createChannel((err, ch)=>{
             var exchange =  'topic_exchange';
             ch.assertExchange(exchange, 'topic');
