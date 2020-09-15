@@ -1,3 +1,5 @@
+const { truncate } = require('fs');
+
 var admin_data = { "room": process.env.adminRoom, "user_id": process.env.adminID};
 		
 module.exports = function(robot) 
@@ -91,30 +93,68 @@ module.exports = function(robot)
     });
 
     /*### consume message from discord server ###*/
+    // var amqp = require('amqplib/callback_api');
+    // amqp.connect('amqp://36.229.104.110', function(err, conn){
+    //     conn.createChannel(function(err, channel){
+    //         var ex = 'topic_logs'; // exchange name
+    //         channel.assertExchange(ex, 'topic'); // exchange with 'topic' type
+    //         var q = 'testQ'; // queue name
+    //         channel.assertQueue(q, {
+    //             exclusive: true
+    //         }, function(err, q){
+    //             if(err){
+    //                 throw err;
+    //             }
+    //             // set topic pattern : bind exchange,routingKey and queue
+    //             channel.bindQueue(q.queue, ex, '#');
+    //             channel.consume(q.queue, function(msg){
+    //                 // handle message consumed
+    //                 console.log("[x] received %s", msg.content.toString());
+    //                 // var bots = robot.brain.get('bots');
+    //                 // for(var i = 0;i < bots.length; i++)
+    //                 // {
+    //                 //     var bot = bots[i];
+    //                 //     bot.bot.postMessage(json.roomNumber, msg.content.toString());  
+    //                 // }
+    //                 robot.send(admin_data,"discord-rabbitmq message captured : "+ msg.content.toString());
+    //             });
+    //         });
+    //     });
+    // });
     var amqp = require('amqplib/callback_api');
-    amqp.connect('amqp://36.229.104.110', function(err, conn){
-        conn.createChannel(function(err, channel){
-            var ex = 'topic_logs'; // exchange name
-            channel.assertExchange(ex, 'topic'); // exchange with 'topic' type
-            var q = 'myQueue'; // queue name
-            channel.assertQueue(q, {
-                exclusive: true
-            }, function(err, q){
-                if(err){
-                    throw err;
+    var rKey = ['discord.#']; // routing key
+
+    if(rKey.length == 0){
+        console.log("routing key is missing");
+    }
+    amqp.connect('amqp://36.229.104.110', function(err, connection){
+        if(err){
+            throw err;
+        }
+        connection.createChannel(function(err1, channel){
+            if(err1){
+                throw err1;
+            }
+            var exchange = 'topic_logs'; // exchange name
+            channel.assertExchange(exchange, 'topic', {
+                durable: true
+            });
+            // queue name
+            channel.assertQueue('testQ', {
+                exclusive: false
+            }, function(err2, q){
+                if(err2){
+                    throw err2;
                 }
-                // set topic pattern : bind exchange,routingKey and queue
-                channel.bindQueue(q.queue, ex, '#');
+                console.log('connected');
+                rKey.forEach(function(key){
+                    channel.bindQueue(q.queue, exchange, key);
+                });
                 channel.consume(q.queue, function(msg){
-                    // handle message consumed
-                    console.log("[x] received %s", msg.content.toString());
-                    // var bots = robot.brain.get('bots');
-                    // for(var i = 0;i < bots.length; i++)
-                    // {
-                    //     var bot = bots[i];
-                    //     bot.bot.postMessage(json.roomNumber, msg.content.toString());  
-                    // }
-                    robot.send(admin_data,"discord-rabbitmq message captured : "+ msg.content.toString());
+                    console.log("[x] %s: %s", msg.fields.routingKey, msg.content.toString());
+                    robot.send(admin_data,"discord-rabbitmq message captured from key[" + msg.fields.routingKey + "] : "+ msg.content.toString());
+                }, {
+                    noAck: true
                 });
             });
         });
