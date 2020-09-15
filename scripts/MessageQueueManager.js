@@ -108,12 +108,13 @@ module.exports = function(robot)
                 channel.consume(q.queue, function(msg){
                     // handle message consumed
                     console.log("[x] received %s", msg.content.toString());
-                    var bots = robot.brain.get('bots');
-                    for(var i = 0;i < bots.length; i++)
-                    {
-                        var bot = bots[i];
-                        bot.bot.postMessage(json.roomNumber, msg.content.toString());  
-                    }
+                    // var bots = robot.brain.get('bots');
+                    // for(var i = 0;i < bots.length; i++)
+                    // {
+                    //     var bot = bots[i];
+                    //     bot.bot.postMessage(json.roomNumber, msg.content.toString());  
+                    // }
+                    robot.send(admin_data,"discord-rabbitmq message captured : "+ msg.content.toString());
                 });
             });
         });
