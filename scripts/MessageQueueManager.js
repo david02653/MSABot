@@ -92,18 +92,27 @@ module.exports = function(robot)
 
     /*### consume message from discord server ###*/
     var amqp = require('amqplib/callback_api');
-    amqp.connect('amqp://36.229.104.235', (err, conn)=>{
-        conn.createChannel((err, ch)=>{
-            var exchange =  'topic_exchange';
-            ch.assertExchange(exchange, 'topic');
-            ch.assertQueue('', {exclusive: true}, (err, q)=>{
-                ch.bindQueue(q.queue, exchange, 'cat.dance');
-                ch.consume(q.queue, (msg)=>{
-		            robot.send(admin_data,msg);
+    amqp.connect('amqp://localhost', function(err, conn){
+        conn.createChannel(function(err, channel){
+            var ex = 'topic_logs'; // exchange name
+            channel.assertExchange(ex, 'topic'); // exchange with 'topic' type
+            var q = 'myQueue'; // queue name
+            channel.assertQueue(q, {
+                exclusive: true
+            }, function(err, q){
+                if(err){
+                    throw err;
+                }
+                // set topic pattern : bind exchange,routingKey and queue
+                channel.bindQueue(q.queue, ex, 'disbot.#');
+                channel.consume(q.queue, function(msg){
+                    // handle message consumed
+                    console.log("[x] received %s", msg.content.toString());
                 });
             });
         });
     });
+    
 }
 
 
