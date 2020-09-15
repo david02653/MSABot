@@ -104,7 +104,7 @@ module.exports = function(robot)
                     throw err;
                 }
                 // set topic pattern : bind exchange,routingKey and queue
-                channel.bindQueue(q.queue, ex, 'disbot.#');
+                channel.bindQueue(q.queue, ex, '#');
                 channel.consume(q.queue, function(msg){
                     // handle message consumed
                     console.log("[x] received %s", msg.content.toString());
