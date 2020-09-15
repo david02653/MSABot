@@ -112,7 +112,7 @@ module.exports = function(robot)
                     for(var i = 0;i < bots.length; i++)
                     {
                         var bot = bots[i];
-                        bot.bot.postMessage(json.roomNumber, result.toString());  
+                        bot.bot.postMessage(json.roomNumber, msg.content.toString());  
                     }
                 });
             });
