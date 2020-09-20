@@ -127,7 +127,7 @@ module.exports = function(robot)
     if(rKey.length == 0){
         console.log("routing key is missing");
     }
-    amqp.connect('amqp://36.229.104.110', function(err, connection){
+    amqp.connect('amqp://140.121.197.130:9050', function(err, connection){
         if(err){
             throw err;
         }
